@@ -27,6 +27,41 @@ class ViewController: UIViewController {
         createAnnotation(title: "Escuela Estech", locationName: "Escuela de Tecnologias Aplicadas", discipline: "Linares", coordinate: estechChoords)
         createAnnotation(title: "El Pósito", locationName: "El Pósito de Linares", discipline: "Linares", coordinate: positoChoords)
         createAnnotation(title: "Catedral", locationName: "Catedral de Baeza", discipline: "Baeza", coordinate: catedralChoords)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMapView(_:)))
+            mapView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func didTapMapView(_ gesture: UITapGestureRecognizer) {
+        let locationInView = gesture.location(in: mapView)
+        let tappedCoordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
+            
+        let alertController = UIAlertController(title: "Nuevo marcador", message: "Introduce los detalles del marcador", preferredStyle: .alert)
+            
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Título"
+        }
+            
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Nombre de la ubicación"
+        }
+            
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Lugar de la ubicación"
+        }
+            
+        let confirmAction = UIAlertAction(title: "Aceptar", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            let title = alertController.textFields?[0].text ?? "Sin título"
+            let locationName = alertController.textFields?[1].text ?? "Sin nombre de ubicación"
+            let discipline = alertController.textFields?[2].text ?? "Sin disciplina"
+            self.createAnnotation(title: title, locationName: locationName, discipline: discipline, coordinate: tappedCoordinate)
+        }
+            
+        alertController.addAction(confirmAction)
+        let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+            
+        present(alertController, animated: true, completion: nil)
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -35,6 +70,7 @@ class ViewController: UIViewController {
     }
     
     func createAnnotation(title: String, locationName: String, discipline: String, coordinate: CLLocationCoordinate2D) {
+        
         let artwork = Artwork(title: title, locationName: locationName, discipline: discipline, coordinate: coordinate, pinColor: .red)
         if discipline == "Linares" {
             artwork.pinColor = .red
@@ -78,4 +114,9 @@ extension ViewController: MKMapViewDelegate {
             }
             location.mapItem().openInMaps(launchOptions: launchOptions)
         }
+    
+    func mapView(_ mapView: MKMapView, didTapMapView coordinate: CLLocationCoordinate2D) {
+        createAnnotation(title: "Nuevo marcador", locationName: "Ubicación seleccionada", discipline: "Linares", coordinate: coordinate)
+        }
+    
     }
