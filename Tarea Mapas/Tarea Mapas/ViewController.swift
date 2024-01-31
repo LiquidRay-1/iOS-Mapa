@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class ViewController: UIViewController {
 
@@ -17,6 +18,8 @@ class ViewController: UIViewController {
     let catedralChoords = CLLocationCoordinate2D(latitude: 37.9901227699412 , longitude: -3.468754691390374)
     let initialLocation = CLLocation(latitude: 38.09292631502212, longitude: -3.6349495423269844)
     let regionRadius: CLLocationDistance = 45000
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +32,8 @@ class ViewController: UIViewController {
         createAnnotation(title: "Catedral", locationName: "Catedral de Baeza", discipline: "Baeza", coordinate: catedralChoords)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMapView(_:)))
             mapView.addGestureRecognizer(tapGesture)
+        
+        loadMarkers()
     }
     
     @objc func didTapMapView(_ gesture: UITapGestureRecognizer) {
@@ -48,6 +53,23 @@ class ViewController: UIViewController {
         alertController.addTextField { (textField) in
             textField.placeholder = "Lugar de la ubicación"
         }
+        
+        let confirmAction = UIAlertAction(title: "Aceptar", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            let title = alertController.textFields?[0].text ?? "Sin título"
+            let locationName = alertController.textFields?[1].text ?? "Sin nombre de ubicación"
+            let discipline = alertController.textFields?[2].text ?? "Sin disciplina"
+
+            let newMarker = Marker(context: self.context)
+            newMarker.title = title
+            newMarker.locationName = locationName
+            newMarker.discipline = discipline
+            newMarker.latitude = tappedCoordinate.latitude
+            newMarker.longitude = tappedCoordinate.longitude
+            try? self.context.save()
+
+            self.createAnnotation(title: title, locationName: locationName, discipline: discipline, coordinate: tappedCoordinate)
+            }
             
         let confirmAction = UIAlertAction(title: "Aceptar", style: .default) { [weak self] _ in
             guard let self = self else { return }
@@ -62,6 +84,20 @@ class ViewController: UIViewController {
         alertController.addAction(cancelAction)
             
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func loadMarkers() {
+        let request: NSFetchRequest<Marker> = Marker.fetchRequest()
+
+        do {
+            let markers = try context.fetch(request)
+            for marker in markers {
+                let coordinate = CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude)
+                createAnnotation(title: marker.title!, locationName: marker.locationName!, discipline: marker.discipline!, coordinate: coordinate)
+            }
+        } catch {
+            print("Error al cargar los marcadores: \(error)")
+        }
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -118,5 +154,4 @@ extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didTapMapView coordinate: CLLocationCoordinate2D) {
         createAnnotation(title: "Nuevo marcador", locationName: "Ubicación seleccionada", discipline: "Linares", coordinate: coordinate)
         }
-    
     }

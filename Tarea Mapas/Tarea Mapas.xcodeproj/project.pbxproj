@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D890F0B2B6AC31E00CC51E8 /* MapaApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D890F092B6AC31E00CC51E8 /* MapaApp.xcdatamodeld */; };
 		3DF2EDCD2B5EF8C100A99054 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF2EDCC2B5EF8C100A99054 /* AppDelegate.swift */; };
 		3DF2EDCF2B5EF8C100A99054 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF2EDCE2B5EF8C100A99054 /* SceneDelegate.swift */; };
 		3DF2EDD12B5EF8C100A99054 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF2EDD02B5EF8C100A99054 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D890F0A2B6AC31E00CC51E8 /* MapaApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MapaApp.xcdatamodel; sourceTree = "<group>"; };
 		3DF2EDC92B5EF8C100A99054 /* Tarea Mapas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tarea Mapas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF2EDCC2B5EF8C100A99054 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3DF2EDCE2B5EF8C100A99054 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				3DF2EDD52B5EF8CD00A99054 /* Assets.xcassets */,
 				3DF2EDD72B5EF8CD00A99054 /* LaunchScreen.storyboard */,
 				3DF2EDDA2B5EF8CD00A99054 /* Info.plist */,
+				3D890F092B6AC31E00CC51E8 /* MapaApp.xcdatamodeld */,
 			);
 			path = "Tarea Mapas";
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				3DF2EDD12B5EF8C100A99054 /* ViewController.swift in Sources */,
 				3DF2EDCD2B5EF8C100A99054 /* AppDelegate.swift in Sources */,
 				3DF2EDE12B5EFAEB00A99054 /* Artwork.swift in Sources */,
+				3D890F0B2B6AC31E00CC51E8 /* MapaApp.xcdatamodeld in Sources */,
 				3DF2EDCF2B5EF8C100A99054 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +369,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3D890F092B6AC31E00CC51E8 /* MapaApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3D890F0A2B6AC31E00CC51E8 /* MapaApp.xcdatamodel */,
+			);
+			currentVersion = 3D890F0A2B6AC31E00CC51E8 /* MapaApp.xcdatamodel */;
+			path = MapaApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3DF2EDC12B5EF8C000A99054 /* Project object */;
 }
