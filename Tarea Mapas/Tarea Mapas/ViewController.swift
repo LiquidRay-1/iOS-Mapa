@@ -60,7 +60,7 @@ class ViewController: UIViewController {
             let locationName = alertController.textFields?[1].text ?? "Sin nombre de ubicación"
             let discipline = alertController.textFields?[2].text ?? "Sin disciplina"
 
-            let newMarker = Marker(context: self.context)
+            let newMarker = Marcador(context: self.context)
             newMarker.title = title
             newMarker.locationName = locationName
             newMarker.discipline = discipline
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
             self.createAnnotation(title: title, locationName: locationName, discipline: discipline, coordinate: tappedCoordinate)
             }
             
-        let confirmAction = UIAlertAction(title: "Aceptar", style: .default) { [weak self] _ in
+        let confirmAction2 = UIAlertAction(title: "Aceptar", style: .default) { [weak self] _ in
             guard let self = self else { return }
             let title = alertController.textFields?[0].text ?? "Sin título"
             let locationName = alertController.textFields?[1].text ?? "Sin nombre de ubicación"
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     }
     
     func loadMarkers() {
-        let request: NSFetchRequest<Marker> = Marker.fetchRequest()
+        let request: NSFetchRequest<Marcador> = Marcador.fetchRequest()
 
         do {
             let markers = try context.fetch(request)
@@ -130,7 +130,6 @@ extension ViewController: MKMapViewDelegate {
         } else {
             view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
-            //view.calloutOffset = CGPoint(x: -5, y: 5)
             view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         
